@@ -1,6 +1,6 @@
 # Spectroastrometric Tools
 
-Here you can find graphical user interfaces (GUI) for processing and planning spectroastrometric observations: 
+Here you can find graphical user interfaces for processing and planning spectroastrometric observations: 
 * **SPARTA** (Spectral Processing for Analysis, Reduction and Two-source Astrometry) 
 * **TALOS** (Test for Astrometric Limits of Observed Spectra). 
 
