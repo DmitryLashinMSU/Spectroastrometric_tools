@@ -1,6 +1,6 @@
 # TALOS (Test for Astrometric Limits of Observed Spectra)
 
-<img src="../img/TALOS/TALOS.png" width="50%">
+<img src="../img/TALOS/TALOS.png" width="80%">
 
 ## Overview
 TALOS is a software designed for planning spectro-astrometric observations. It allows you to determine the detection limit of a spectro-astrometric signal under various instrumental parameters and configurations of the observed system.
