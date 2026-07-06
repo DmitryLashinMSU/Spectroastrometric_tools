@@ -1,6 +1,6 @@
 # SPARTA (Spectral Processing for Analysis, Reduction and Two-source Astrometry)
 
-Программа для комплексной обработки спектроастрометрических наблюдений. Процесс работы разделен на три последовательных этапа, каждый из которых выполняется в отдельном графическом окне.
+A program for the processing of spectro-astrometric observations. The workflow is divided into three stages, each executed in a separate graphical window.
 
 ## Running
 To ensure the program works correctly, it is recommended to use a virtual environment to avoid dependency conflicts.
@@ -18,82 +18,82 @@ To ensure the program works correctly, it is recommended to use a virtual enviro
    python SPARTA_main.py
 ```
 
-Программа работает с FITS-файлами. Ожидается, что массив данных и заголовок располагаются в нулевом расширении файла. Если структура ваших файлов отличается, их необходимо предварительно переконвертировать.
+The program works with FITS files. It is expected that the data array and the header are located in the primary (zeroth) extension of the file. If your file structure differs, they must be converted beforehand.
 
 ---
 
-## Этап 1: Предобработка
+## Stage 1: Preprocessing
 
 <div align="center">
-  <img src="../img/SPARTA/SPARTA_preprocessing.png" width="60%">
+  <img src="../img/SPARTA/SPARTA_preprocessing.png" width="100%">
 </div>
 
-На данном этапе загружаются спектроастрометрические кадры, полученные в двух позиционных углах (Load PA1 и Load PA2), настраивается область обработки и извлекается первичный сигнал.
+At this stage, spectro-astrometric frames obtained at two position angles are loaded (`Load PA1` and `Load PA2`), the processing area is configured, and the primary signal is extracted.
 
-### Настройки FITS
-Если FITS-заголовки не содержат нужных ключей, замените значение `FITS` на числовые параметры:
-* **NAXIS1 / NAXIS2** — число пикселей по горизонтальной и вертикальной осям.
-* **CRVAL1** — начальная длина волны на кадре.
-* **CDELT1** — шаг по длине волны на один пиксель.
+### FITS Settings
+If the FITS headers do not contain the required keywords, replace the `FITS` value with numerical parameters:
+* **NAXIS1 / NAXIS2** — number of pixels along the horizontal and vertical axes.
+* **CRVAL1** — starting wavelength of the frame.
+* **CDELT1** — wavelength step per pixel.
 
-### Параметры
+### Parameters
 
-| Параметр | Описание |
+| Parameter | Description |
 |---|---|
-| **Y_est / area** | Положение центра спектра и отступы от него (по оси Y). На графике кадра это красные штриховые линии. Их можно двигать мышью (центр подстроится автоматически) |
-| **wl_start / wl_end** | Исследуемый диапазон длин волн (ограничен голубыми штриховыми линиями, можно двигать мышью) |
-| **vmin / vmax** | Диапазон яркости для отображения кадра (не влияет на расчеты) |
-| **window_size** | Окно сглаживания методом скользящего среднего для устранения тренда из спектров перед сложением |
-| **med_sm** | Параметр медианного сглаживания графиков |
-| **ax_y_sigma** | Масштаб отображения оси Y для нижних графиков |
-| **proc_left / proc_right** | Отсечение краев кадра по оси X (фиолетовые линии) для исключения краевых шумов |
+| **Y_est / area** | Position of the spectrum center and its margins (along the Y-axis). Displayed as red dashed lines on the frame plot. They can be moved with the mouse (the center will adjust automatically). |
+| **wl_start / wl_end** | The wavelength range under investigation (bounded by blue dashed lines, can be moved with the mouse). |
+| **vmin / vmax** | Brightness range for displaying the frame (does not affect calculations). |
+| **window_size** | Smoothing window size for the rolling mean method to remove trends from the spectra before combining them. |
+| **med_sm** | Median smoothing parameter for the plots. |
+| **ax_y_sigma** | Y-axis display scale for the bottom plots. |
+| **proc_left / proc_right** | Cropping the frame edges along the X-axis (purple lines) to exclude edge noise. |
 
-### Управление
-В блоке **Options** можно включить/отключить удаление фона (`rm_bg`), использование границ длин волн (`wl_borders`) и отображение погрешностей на графиках (`see_err`).
+### Controls
+In the **Options** block, you can enable/disable background removal (`rm_bg`), the use of wavelength boundaries (`wl_borders`), and the display of error bars on the plots (`see_err`).
 
-* **Взаимодействие с графиками:** Щелчок *правой кнопкой мыши* по любому графику (кроме кадра) ставит зеленую синхронизирующую линию на всех панелях для сравнения спектральных особенностей.
-* **Графики:** Справа вверху — усредненные спектры. Справа внизу — отклонения центроидов для PA1 и PA2. Слева внизу — спектроастрометрический сигнал (полуразность этих отклонений).
-* **Analyze Data:** Сохраняет результаты первого этапа и открывает окно следующего шага.
+* **Plot Interaction:** *Right-clicking* on any plot (except the frame itself) places a green synchronizing line across all panels to easily compare spectral features.
+* **Plots:** Top right — averaged spectra. Bottom right — centroid deviations for PA1 and PA2. Bottom left — spectro-astrometric signal (half-difference of these deviations).
+* **Analyze Data:** Saves the results of the first stage and opens the window for the next step.
 
 ---
 
-## Этап 2: Спектроастрометрическая обработка
+## Stage 2: Spectro-astrometric Processing
 
 <div align="center">
-  <img src="../img/SPARTA/SPARTA_processing.png" width="60%">
+  <img src="../img/SPARTA/SPARTA_processing.png" width="100%">
 </div>
 
-На этом этапе анализируются индивидуальные спектральные линии для определения истинных координат источников. Алгоритм вычитает пространственный профиль спектра в континууме из профиля в линии для множества точек вокруг центра линии. Результаты (измерения координаты центра) отображаются на трех цветовых картах внизу (PA1, PA2 и их полуразность).
+At this stage, individual spectral lines are analyzed to determine the true Y-coordinates of the sources. The algorithm subtracts the spatial profile of the "continuum" spectrum from the profile within the line for multiple points around the line center. The results (measurements of the center coordinate) are displayed on three color maps at the bottom (PA1, PA2, and their half-difference).
 
-### Параметры
+### Parameters
 
-| Параметр | Описание |
+| Parameter | Description |
 |---|---|
-| **line_center** | Центр исследуемой линии. Можно ввести вручную или кликнуть *правой кнопкой мыши* по верхним графикам |
-| **d_cont** | Максимальный отступ от центра линии для вычисления координат |
-| **prof_area** | Ширина области обработки профиля (по умолчанию берется из Этапа 1). |
-| **indent** | Отступ от точек совпадения координат профилей линии и континуума. |
-| **vmin_1,2 / vmax_1,2** | Процент отклонения точек цветовых карт от среднего значения для фильтрации результатов по PA1 и PA2. |
+| **line_center** | Center of the investigated line. It can be entered manually or by *right-clicking* on the top plots. |
+| **d_cont** | Maximum offset from the line center to calculate coordinates. |
+| **prof_area** | Width of the profile processing area (taken from Stage 1 by default). |
+| **indent** | Offset from the coordinate matching points of the line and continuum profiles. |
+| **vmin_1,2 / vmax_1,2** | Percentage of deviation of the color map points from the mean value to filter results for PA1 and PA2. |
 
-### Порядок работы на Этапе 2:
-1. Выберите линию (`line_center`) и нажмите **Create Map**. Оцените результат на цветовых картах.
-2. Нажмите **Write Row**, чтобы зафиксировать y-координату в таблице слева.
-3. В таблице в столбце `source` укажите, к какому из двух источников относится эта линия (1 или 2).
-4. Повторите процесс для других линий обоих источников.
-5. Нажмите **Find Separation**, чтобы программа вычислила общие координаты и разделение `sep` (d1, d2) между источниками на основе собранных данных.
-6. Нажмите **Separate Spectra** для перехода к финальному шагу.
+### Workflow for Stage 2:
+1. Select a line (`line_center`) and click **Create Map**. Evaluate the result on the color maps.
+2. Click **Write Row** to record the Y-coordinate in the table on the left.
+3. In the table's `source` column, indicate which of the two sources this line belongs to (1 or 2).
+4. Repeat the process for other lines of both sources.
+5. Click **Find Separation** so the program calculates the general coordinates and the separation `sep` (d1, d2) between the sources based on the collected data.
+6. Click **Separate Spectra** to proceed to the final step.
 
 ---
 
-## Этап 3: Разделение спектров
+## Stage 3: Spectral Separation
 
 <div align="center">
   <img src="../img/SPARTA/SPARTA_separation.png" width="60%">
 </div>
 
-Финальное окно осуществляет разделение общего спектра на два независимых компонента, используя координаты `d1` и `d2`, найденные на предыдущем этапе.
+The final window separates the combined spectrum into two independent components using the `d1` and `d2` coordinates found in the previous stage.
 
-* **Параметры:** Вы можете вручную изменять значения `d1` и `d2`, чтобы исследовать их влияние на итоговый результат. Параметр `med_sm` позволяет применить медианное сглаживание к итоговым графикам.
-* **Recount:** Пересчитать спектры с новыми введенными значениями d1/d2.
-* **Set Defaults:** Вернуть значения d1 и 60%d2, рассчитанные на Этапе 2.
-* **Save Results:** Сохранить итоговые разделенные спектры в файл.
+* **Parameters:** You can manually change the `d1` and `d2` values to investigate their effect on the final result. The `med_sm` parameter applies median smoothing to the final plots.
+* **Recount:** Recalculates the spectra using the newly entered d1/d2 values.
+* **Set Defaults:** Restores the `d1` and `d2` values calculated in Stage 2. *(Note: fixed typo from the original text).*
+* **Save Results:** Saves the final separated spectra to a file.
