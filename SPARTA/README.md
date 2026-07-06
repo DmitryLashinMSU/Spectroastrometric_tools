@@ -40,13 +40,13 @@ If the FITS headers do not contain the required keywords, replace the `FITS` val
 
 | Parameter | Description |
 |---|---|
-| **Y_est / area** | Position of the spectrum center and its margins (along the Y-axis). Displayed as red dashed lines on the frame plot. They can be moved with the mouse (the center will adjust automatically). |
-| **wl_start / wl_end** | The wavelength range under investigation (bounded by blue dashed lines, can be moved with the mouse). |
-| **vmin / vmax** | Brightness range for displaying the frame (does not affect calculations). |
-| **window_size** | Smoothing window size for the rolling mean method to remove trends from the spectra before combining them. |
-| **med_sm** | Median smoothing parameter for the plots. |
-| **ax_y_sigma** | Y-axis display scale for the bottom plots. |
-| **proc_left / proc_right** | Cropping the frame edges along the X-axis (purple lines) to exclude edge noise. |
+| **Y_est / area** | Position of the spectrum center and its margins (along the Y-axis). Displayed as red dashed lines on the frame plot. They can be moved with the mouse (the center will adjust automatically) |
+| **wl_start / wl_end** | The wavelength range under investigation (bounded by blue dashed lines, can be moved with the mouse) |
+| **vmin / vmax** | Brightness range for displaying the frame (does not affect calculations) |
+| **window_size** | Smoothing window size for the rolling mean method to remove trends from the spectra before combining them |
+| **med_sm** | Median smoothing parameter for the plots |
+| **ax_y_sigma** | Y-axis display scale for the bottom plots |
+| **proc_left / proc_right** | Cropping the frame edges along the X-axis (purple lines) to exclude edge noise |
 
 ### Controls
 In the **Options** block, you can enable/disable background removal (`rm_bg`), the use of wavelength boundaries (`wl_borders`), and the display of error bars on the plots (`see_err`).
@@ -69,11 +69,11 @@ At this stage, individual spectral lines are analyzed to determine the true Y-co
 
 | Parameter | Description |
 |---|---|
-| **line_center** | Center of the investigated line. It can be entered manually or by *right-clicking* on the top plots. |
-| **d_cont** | Maximum offset from the line center to calculate coordinates. |
-| **prof_area** | Width of the profile processing area (taken from Stage 1 by default). |
-| **indent** | Offset from the coordinate matching points of the line and continuum profiles. |
-| **vmin_1,2 / vmax_1,2** | Percentage of deviation of the color map points from the mean value to filter results for PA1 and PA2. |
+| **line_center** | Center of the investigated line. It can be entered manually or by *right-clicking* on the top plots |
+| **d_cont** | Maximum offset from the line center to calculate coordinates |
+| **prof_area** | Width of the profile processing area (taken from Stage 1 by default) |
+| **indent** | Offset from the coordinate matching points of the line and continuum profiles |
+| **vmin_1,2 / vmax_1,2** | Percentage of deviation of the color map points from the mean value to filter results for PA1 and PA2 |
 
 ### Workflow for Stage 2:
 1. Select a line (`line_center`) and click **Create Map**. Evaluate the result on the color maps.
