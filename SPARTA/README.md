@@ -95,5 +95,5 @@ The final window separates the combined spectrum into two independent components
 
 * **Parameters:** You can manually change the `d1` and `d2` values to investigate their effect on the final result. The `med_sm` parameter applies median smoothing to the final plots.
 * **Recount:** Recalculates the spectra using the newly entered d1/d2 values.
-* **Set Defaults:** Restores the `d1` and `d2` values calculated in Stage 2. *(Note: fixed typo from the original text).*
+* **Set Defaults:** Restores the `d1` and `d2` values calculated in Stage 2.
 * **Save Results:** Saves the final separated spectra to a file.
